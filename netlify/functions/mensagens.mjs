@@ -37,8 +37,9 @@ export default async (req) => {
 
     // apagar (só com a senha de admin definida no painel da Netlify)
     if (body.acao === "apagar") {
-      const senha = process.env.ADMIN_SENHA;
-      if (!senha || body.senha !== senha) return json({ erro: "sem permissão" }, 403);
+      const senha = String((globalThis.Netlify?.env?.get?.("ADMIN_SENHA")) || process.env.ADMIN_SENHA || "").trim();
+      if (!senha) return json({ erro: "a variável ADMIN_SENHA não chegou na função — faça um novo deploy" }, 403);
+      if (String(body.senha || "").trim() !== senha) return json({ erro: "senha errada" }, 403);
       await store.delete(String(body.id || ""));
       return json({ ok: true });
     }
