@@ -165,6 +165,21 @@ body.festa header{padding-top:70px}
 body.festa .lanterna{display:block}
 @keyframes pendulo{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}
 
+
+/* ===== Player de música (BTS) ===== */
+.player{position:fixed;right:12px;bottom:12px;z-index:55;background:#fff;border-radius:20px;box-shadow:0 10px 30px rgba(120,0,60,.35);border:3px solid var(--rosa);overflow:hidden;width:220px;transition:width .3s}
+.player .topo{display:flex;align-items:center;gap:8px;padding:8px 10px;background:linear-gradient(90deg,var(--rosa),var(--lilas));color:#fff;font-weight:800;font-size:.85rem}
+.player .topo .musica{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player .topo button{background:#fff;color:var(--rosa-forte);border:none;border-radius:50%;width:30px;height:30px;font-size:1rem;cursor:pointer;flex:none}
+.player .video{width:100%;aspect-ratio:16/9;background:#000}
+.player .video iframe,.player .video div{width:100%;height:100%}
+.player.mini{width:auto}
+.player.mini .video{height:1px;width:220px;aspect-ratio:auto;opacity:.01}
+.player.mini .musica{display:none}
+.chamada-musica{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:56;background:linear-gradient(90deg,var(--rosa-forte),var(--lilas));color:#fff;border:3px solid #fff;border-radius:999px;padding:12px 22px;font-family:'Baloo 2';font-weight:800;font-size:1.05rem;box-shadow:0 8px 24px rgba(120,0,60,.4);cursor:pointer;animation:pulo 1.4s ease-in-out infinite;white-space:nowrap}
+.chamada-musica.some{display:none}
+@media (max-width:560px){.player{width:170px}.player.mini .video{width:170px}.chamada-musica{font-size:.95rem;padding:10px 16px;bottom:70px}}
+
 @media (max-width:560px){
   .blocos{gap:8px}.bloco{border-radius:16px;padding:12px 2px 8px}
   .avatar{width:110px;height:110px}
@@ -242,6 +257,16 @@ body.festa .lanterna{display:block}
   <div class="cn">欢迎回来</div>
   <div style="color:#fff;font-weight:800;font-size:1.2rem">(huānyíng huílái = bem-vinda de volta!) 🇧🇷❤️🇨🇳</div>
   <small>toque para ver o mural 💌</small>
+</div>
+
+<button class="chamada-musica" id="chamadaMusica" type="button">🎵 Toque aqui pra ligar o som (BTS) 💜</button>
+<div class="player mini" id="player">
+  <div class="topo">
+    <button id="btnPlay" type="button" aria-label="Tocar ou pausar">▶</button>
+    <span class="musica" id="nomeMusica">BTS 💜</span>
+    <button id="btnTam" type="button" aria-label="Mostrar vídeo">📺</button>
+  </div>
+  <div class="video"><div id="yt"></div></div>
 </div>
 <div class="lightbox" id="lightbox"><button aria-label="Fechar">✕</button><img alt=""></div>
 
@@ -347,6 +372,59 @@ function tick() {
   $("#barra").style.width = pct + "%";
 }
 
+
+// ================= MÚSICA (BTS via YouTube oficial HYBE LABELS) =================
+const PLAYLIST_BTS = ["WMweEpGlu_U","XsX3ATc3FbA","MBdVXkSdhwU","CuklIb9d3fI","gdZLi9oWNZg"]; // Butter, Boy With Luv, DNA, Permission to Dance, Dynamite
+const MUSICA_CHEGADA = "gdZLi9oWNZg"; // Dynamite — toca quando ela chegar
+let yt = null, ytPronto = false, somLiberado = false, modoChegada = false, tocando = false;
+window.onYouTubeIframeAPIReady = () => {
+  yt = new YT.Player("yt", {
+    width: "100%", height: "100%",
+    playerVars: { playsinline: 1, controls: 1, rel: 0, modestbranding: 1 },
+    events: {
+      onReady: () => { ytPronto = true; if (somLiberado) tocarMusica(); },
+      onStateChange: (e) => {
+        tocando = e.data === YT.PlayerState.PLAYING;
+        document.getElementById("btnPlay").textContent = tocando ? "⏸" : "▶";
+        if (tocando) { const d = yt.getVideoData(); document.getElementById("nomeMusica").textContent = "🎵 " + (d.title || "BTS").replace(/BTS \(방탄소년단\)\s*/,"").replace(/ Official MV/,""); }
+        if (e.data === YT.PlayerState.ENDED && modoChegada) yt.playVideo(); // Dynamite em loop na chegada
+      },
+      onError: () => { if (!modoChegada) yt.nextVideo(); }
+    }
+  });
+};
+(() => { const t = document.createElement("script"); t.src = "https://www.youtube.com/iframe_api"; document.head.appendChild(t); })();
+
+function tocarMusica() {
+  if (!ytPronto) return;
+  if (modoChegada) { yt.loadVideoById(MUSICA_CHEGADA); }
+  else { yt.loadPlaylist(PLAYLIST_BTS, Math.floor(Math.random() * (PLAYLIST_BTS.length - 1))); yt.setLoop(true); }
+  yt.unMute(); yt.setVolume(90);
+}
+function liberarSom() {
+  if (somLiberado) return;
+  somLiberado = true;
+  document.getElementById("chamadaMusica").classList.add("some");
+  tocarMusica();
+}
+// o navegador só deixa tocar som depois que a pessoa toca na tela
+document.getElementById("chamadaMusica").onclick = liberarSom;
+["pointerdown","keydown","touchstart"].forEach((ev) => document.addEventListener(ev, liberarSom, { once: true, passive: true }));
+document.getElementById("btnPlay").onclick = (e) => {
+  e.stopPropagation();
+  if (!somLiberado) return liberarSom();
+  if (!ytPronto) return;
+  tocando ? yt.pauseVideo() : yt.playVideo();
+};
+document.getElementById("btnTam").onclick = (e) => { e.stopPropagation(); document.getElementById("player").classList.toggle("mini"); };
+
+function musicaChegada() {
+  modoChegada = true;
+  document.getElementById("chamadaMusica").textContent = "🧨 Toque pra tocar DYNAMITE! 💜";
+  if (somLiberado && ytPronto) { yt.setLoop(false); tocarMusica(); }
+}
+// ==================================================================================
+
 // ================= MODO FESTA =================
 const EMOJIS_CHINA = ["🏮","🧧","🐉","🐲","🐼","🥟","🍜","🥢","🍵","🥮","🎎","🎐","🏯","🀄","🧨","🎆","🎇","🍡","🥠","🪭","🐅","🌸","💖","🎉","✨","🇨🇳","🇧🇷"];
 function chuvaEmoji(qtd = 18) {
@@ -412,6 +490,7 @@ function animarFogos() {
 
 function iniciarFesta() {
   document.body.classList.add("festa");
+  musicaChegada();
   redim(); animarFogos();
   const banner = document.getElementById("bannerFesta");
   banner.classList.add("mostrar");
