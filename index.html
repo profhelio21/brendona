@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Major Está Voltando 💖</title>
+<meta name="description" content="Contagem regressiva para o retorno da Brenda (Major) e mural de mensagens de saudade.">
+<meta property="og:title" content="A Major está voltando! 💖">
+<meta property="og:description" content="Deixe sua mensagem de saudade pra Brenda!">
+<meta property="og:image" content="img/brenda-sorvete1.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rosa:#ff4fa3; --rosa-forte:#e0147a; --rosa-claro:#ffd6ea; --rosa-bebe:#fff0f7;
+  --lilas:#c77dff; --texto:#4a1036; --branco:#fff;
+  --vidro:rgba(255,255,255,.78);
+  --sombra:0 10px 30px rgba(224,20,122,.25);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',system-ui,sans-serif;color:var(--texto);background:#ffe3f1;min-height:100vh;overflow-x:hidden}
+
+/* ===== Fundo com fotos dela ===== */
+.fundo{position:fixed;inset:0;z-index:-2;overflow:hidden}
+.fundo img{position:absolute;inset:-4%;width:108%;height:108%;object-fit:cover;opacity:0;transition:opacity 2s ease;filter:saturate(1.1);animation:zoom 22s ease-in-out infinite alternate}
+.fundo img.ativa{opacity:1}
+@keyframes zoom{from{transform:scale(1)}to{transform:scale(1.1)}}
+.fundo::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 20% 10%,rgba(255,79,163,.55),transparent 55%),
+  radial-gradient(circle at 80% 90%,rgba(199,125,255,.55),transparent 55%),
+  linear-gradient(180deg,rgba(255,105,180,.72),rgba(255,182,217,.82) 50%,rgba(255,79,163,.85))}
+
+/* corações flutuando */
+#coracoes{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
+.cor{position:absolute;bottom:-60px;animation:subir linear forwards;opacity:.85;will-change:transform}
+@keyframes subir{to{transform:translateY(-115vh) rotate(25deg);opacity:0}}
+
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+
+/* ===== Hero ===== */
+header{text-align:center;padding:48px 0 24px;color:#fff}
+.selo{display:inline-block;background:#fff;color:var(--rosa-forte);font-family:'Baloo 2';font-weight:800;padding:6px 18px;border-radius:999px;box-shadow:var(--sombra);letter-spacing:.5px;animation:pulo 2s ease-in-out infinite}
+@keyframes pulo{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+h1{font-family:'Pacifico',cursive;font-weight:400;font-size:clamp(2.6rem,9vw,5.6rem);line-height:1.1;margin:18px 0 6px;text-shadow:0 4px 0 var(--rosa-forte),0 10px 30px rgba(120,0,60,.35)}
+.sub{font-family:'Baloo 2';font-size:clamp(1.05rem,3.2vw,1.45rem);font-weight:700;text-shadow:0 2px 10px rgba(120,0,60,.35)}
+.avatar{width:140px;height:140px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 0 0 6px var(--rosa),var(--sombra);margin-top:22px;animation:gira 6s ease-in-out infinite}
+@keyframes gira{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg) scale(1.04)}}
+
+/* ===== Cronômetro ===== */
+.cronometro{background:var(--vidro);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:3px solid #fff;border-radius:32px;padding:26px 16px 22px;box-shadow:var(--sombra);text-align:center;margin:10px auto 0;max-width:820px}
+.cronometro h2{font-family:'Baloo 2';font-weight:800;color:var(--rosa-forte);font-size:clamp(1.1rem,3.5vw,1.5rem);margin-bottom:14px}
+.blocos{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.bloco{background:linear-gradient(160deg,var(--rosa),var(--rosa-forte));color:#fff;border-radius:22px;padding:16px 4px 10px;box-shadow:0 8px 0 #b30d62,0 14px 24px rgba(179,13,98,.35);position:relative;overflow:hidden}
+.bloco::before{content:"";position:absolute;inset:0 0 50% 0;background:rgba(255,255,255,.14)}
+.num{font-family:'Baloo 2';font-weight:800;font-size:clamp(2.2rem,9vw,4.4rem);line-height:1;display:block;font-variant-numeric:tabular-nums}
+.num.tic{animation:tic .35s ease}
+@keyframes tic{0%{transform:scale(1.18)}100%{transform:scale(1)}}
+.rot{font-weight:800;font-size:clamp(.72rem,2.4vw,.95rem);text-transform:uppercase;letter-spacing:1px;opacity:.95}
+.data-alvo{margin-top:16px;font-weight:800;color:var(--texto)}
+.barra{height:14px;background:var(--rosa-claro);border-radius:999px;margin:12px auto 0;max-width:520px;overflow:hidden}
+.barra span{display:block;height:100%;width:0;background:repeating-linear-gradient(45deg,var(--rosa),var(--rosa) 10px,var(--lilas) 10px,var(--lilas) 20px);border-radius:999px;transition:width 1s;animation:listras 1s linear infinite;background-size:28px 28px}
+@keyframes listras{to{background-position:28px 0}}
+.chegou{display:none;font-family:'Pacifico';font-size:clamp(2.2rem,8vw,4rem);color:var(--rosa-forte);animation:pulo 1s infinite}
+.cronometro.fim .blocos,.cronometro.fim .barra{display:none}
+.cronometro.fim .chegou{display:block}
+
+/* ===== Seções ===== */
+section{margin:56px 0}
+.titulo{font-family:'Pacifico';font-weight:400;color:#fff;text-align:center;font-size:clamp(1.9rem,6vw,3rem);text-shadow:0 3px 0 var(--rosa-forte),0 8px 20px rgba(120,0,60,.3);margin-bottom:6px}
+.titulo-sub{text-align:center;color:#fff;font-weight:800;margin-bottom:26px;text-shadow:0 2px 8px rgba(120,0,60,.35)}
+
+/* galeria polaroid */
+.galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:22px}
+.polaroid{background:#fff;padding:10px 10px 12px;border-radius:6px;box-shadow:0 12px 26px rgba(120,0,60,.28);transform:rotate(var(--r,0deg));transition:transform .3s;cursor:zoom-in;border:none;text-align:center;font:inherit;color:inherit}
+.polaroid:hover,.polaroid:focus-visible{transform:rotate(0) scale(1.05);z-index:2;outline:none}
+.polaroid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:3px;display:block}
+.polaroid span{display:block;font-family:'Baloo 2';font-weight:700;margin-top:8px;color:var(--rosa-forte);font-size:1.02rem}
+.polaroid::before{content:"";display:block;width:70px;height:20px;background:rgba(255,182,217,.85);margin:-18px auto 6px;transform:rotate(-3deg)}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;background:rgba(74,16,54,.88);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+.lightbox.aberta{display:flex}
+.lightbox img{max-width:100%;max-height:86vh;border-radius:14px;border:6px solid #fff;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lightbox button{position:absolute;top:14px;right:14px;background:#fff;border:none;border-radius:50%;width:44px;height:44px;font-size:1.4rem;cursor:pointer;color:var(--rosa-forte)}
+
+/* ===== Mural ===== */
+.form{background:var(--vidro);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:3px solid #fff;border-radius:28px;padding:22px;box-shadow:var(--sombra);max-width:720px;margin:0 auto 34px}
+.form label{display:block;font-weight:800;margin:0 0 6px;color:var(--rosa-forte)}
+.form input,.form textarea{width:100%;border:2px solid var(--rosa-claro);background:#fff;border-radius:16px;padding:12px 14px;font:inherit;font-size:1rem;color:var(--texto);outline:none;transition:border .2s,box-shadow .2s}
+.form input:focus,.form textarea:focus{border-color:var(--rosa);box-shadow:0 0 0 4px rgba(255,79,163,.2)}
+.form textarea{min-height:110px;resize:vertical}
+.linha{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}
+.emojis button{background:var(--rosa-bebe);border:2px solid var(--rosa-claro);border-radius:12px;font-size:1.25rem;width:42px;height:42px;cursor:pointer;transition:transform .15s}
+.emojis button:hover{transform:scale(1.15) rotate(-6deg)}
+.cores button{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--rosa-claro);cursor:pointer}
+.cores button.sel{box-shadow:0 0 0 3px var(--rosa-forte);transform:scale(1.12)}
+.contador-car{margin-left:auto;font-size:.85rem;font-weight:700;opacity:.7}
+.enviar{width:100%;border:none;border-radius:18px;padding:15px;font-family:'Baloo 2';font-weight:800;font-size:1.25rem;color:#fff;background:linear-gradient(90deg,var(--rosa),var(--lilas),var(--rosa));background-size:200% 100%;cursor:pointer;box-shadow:0 6px 0 #b30d62;transition:transform .1s;animation:brilho 3s linear infinite}
+@keyframes brilho{to{background-position:200% 0}}
+.enviar:active{transform:translateY(4px);box-shadow:0 2px 0 #b30d62}
+.enviar:disabled{opacity:.6;cursor:wait}
+.aviso{margin-top:12px;padding:12px 14px;border-radius:14px;font-weight:800;display:none}
+.aviso.erro{display:block;background:#ffe1e1;color:#b3002d;border:2px solid #ffb3c1}
+.aviso.ok{display:block;background:#e3ffef;color:#0b7a43;border:2px solid #a6f0c6}
+.treme{animation:treme .45s}
+@keyframes treme{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+
+.info-mural{text-align:center;color:#fff;font-weight:800;margin-bottom:18px;text-shadow:0 2px 8px rgba(120,0,60,.35)}
+.mural{columns:3 260px;column-gap:18px}
+.nota{break-inside:avoid;margin:0 0 18px;padding:18px 16px 12px;border-radius:18px;box-shadow:0 10px 22px rgba(120,0,60,.22);position:relative;transform:rotate(var(--r,0deg))}
+.nota.nova{animation:entra .5s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes entra{from{opacity:0;transform:scale(.6) rotate(var(--r,0deg))}}
+.nota.rosa{background:#ffd1e8}.nota.lilas{background:#ecd9ff}.nota.pessego{background:#ffe0cc}
+.nota.menta{background:#d4f7e6}.nota.amarelo{background:#fff4b8}.nota.azul{background:#d6ecff}
+.nota::before{content:"📌";position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-size:1.3rem}
+.nota p{font-size:1.06rem;line-height:1.45;white-space:pre-wrap;word-wrap:break-word}
+.nota footer{display:flex;align-items:center;justify-content:space-between;margin-top:12px;gap:8px}
+.nota .quem{font-family:'Baloo 2';font-weight:800;color:var(--rosa-forte)}
+.nota .quando{font-size:.75rem;opacity:.65;display:block;font-family:'Nunito';font-weight:600;color:var(--texto)}
+.curtir{background:#fff;border:none;border-radius:999px;padding:6px 12px;font-weight:800;cursor:pointer;color:var(--rosa-forte);box-shadow:0 3px 8px rgba(120,0,60,.15);transition:transform .15s;font-family:inherit}
+.curtir:hover{transform:scale(1.1)}
+.curtir.feito{background:var(--rosa);color:#fff}
+.apagar{background:#b3002d;color:#fff;border:none;border-radius:8px;padding:4px 8px;cursor:pointer;font-size:.8rem}
+.vazio{text-align:center;background:var(--vidro);padding:26px;border-radius:22px;font-weight:800;color:var(--rosa-forte)}
+
+footer.rodape{text-align:center;color:#fff;font-weight:800;padding:30px 0 50px;text-shadow:0 2px 8px rgba(120,0,60,.35)}
+
+/* confete */
+.confete{position:fixed;top:-20px;width:10px;height:16px;z-index:60;pointer-events:none;animation:cair linear forwards}
+@keyframes cair{to{transform:translateY(110vh) rotate(720deg)}}
+
+@media (max-width:560px){
+  .blocos{gap:8px}.bloco{border-radius:16px;padding:12px 2px 8px}
+  .avatar{width:110px;height:110px}
+  .galeria{grid-template-columns:repeat(2,1fr);gap:14px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="fundo" id="fundo"></div>
+<div id="coracoes"></div>
+
+<div class="wrap">
+  <header>
+    <span class="selo">💖 OPERAÇÃO RETORNO DA MAJOR 💖</span>
+    <h1>A Major está voltando!</h1>
+    <p class="sub">Brenda, a gente tá contando cada segundo até você chegar ✨</p>
+    <img class="avatar" src="img/brenda-sorvete1.jpg" alt="Brenda, a Major">
+  </header>
+
+  <div class="cronometro" id="cronometro">
+    <h2>⏳ Faltam só...</h2>
+    <div class="blocos">
+      <div class="bloco"><span class="num" id="d">00</span><span class="rot">dias</span></div>
+      <div class="bloco"><span class="num" id="h">00</span><span class="rot">horas</span></div>
+      <div class="bloco"><span class="num" id="m">00</span><span class="rot">min</span></div>
+      <div class="bloco"><span class="num" id="s">00</span><span class="rot">seg</span></div>
+    </div>
+    <div class="barra"><span id="barra"></span></div>
+    <div class="chegou">🎉 A MAJOR VOLTOU! 🎉</div>
+    <p class="data-alvo" id="dataAlvo"></p>
+  </div>
+
+  <section id="memorias">
+    <h2 class="titulo">Nossas memórias 📸</h2>
+    <p class="titulo-sub">Do Piauí para o mundo, e agora de volta pra casa!</p>
+    <div class="galeria" id="galeria"></div>
+  </section>
+
+  <section id="mural">
+    <h2 class="titulo">Mural da saudade 💌</h2>
+    <p class="titulo-sub">Deixa uma mensagem de carinho pra Major!</p>
+
+    <form class="form" id="form" autocomplete="off">
+      <label for="nome">Seu nome</label>
+      <input id="nome" maxlength="40" placeholder="Ex.: Ana do 2º ano (ou deixe em branco)">
+      <div style="height:12px"></div>
+      <label for="texto">Sua mensagem</label>
+      <textarea id="texto" maxlength="400" placeholder="Major, que saudade! Volta logo que a sala não é a mesma sem você 💖" required></textarea>
+      <div class="linha emojis" id="emojis"></div>
+      <div class="linha">
+        <div class="linha cores" id="cores" style="margin:0" role="radiogroup" aria-label="Cor do bilhete"></div>
+        <span class="contador-car" id="car">0/400</span>
+      </div>
+      <button class="enviar" id="enviar" type="submit">Enviar carinho 💖</button>
+      <div class="aviso" id="aviso" role="status"></div>
+    </form>
+
+    <p class="info-mural" id="infoMural"></p>
+    <div class="mural" id="listaMural"></div>
+  </section>
+
+  <footer class="rodape">Feito com muito 💖 pela turma · Do Piauí para o Mundo 2026</footer>
+</div>
+
+<div class="lightbox" id="lightbox"><button aria-label="Fechar">✕</button><img alt=""></div>
+
+<script type="module">
+import { temPalavrao } from "./filtro.mjs";
+
+/* ================= CONFIGURAÇÕES ================= */
+// Data e hora do retorno (horário de Brasília, -03:00)
+const DATA_RETORNO = new Date("2026-09-29T00:00:00-03:00");
+// Início da contagem (para a barra de progresso)
+const INICIO = new Date("2026-09-24T00:00:00-03:00");
+
+const FOTOS_DELA = ["brenda-sorvete1","brenda-scooter","brenda-sorvete2","brenda-zakkami"];
+const GALERIA = [
+  ["brenda-sorvete1","Sorvete em Shanghai 🍦"],
+  ["turma-apollo","Turma no Apollo Park 🚗"],
+  ["turma-certificados","Certificadas! 🎓"],
+  ["brenda-scooter","Major motorizada 🛵"],
+  ["turma-robo","Galera + robô 🤖"],
+  ["turma-campus","Equipe completa 👍"],
+  ["brenda-zakkami","Rolê no Zakkami 🐱"],
+  ["shanghai-noite","Shanghai à noite 🌃"],
+  ["brenda-sorvete2","Mais sorvete! 😋"],
+  ["palestra","Registrando tudo 📱"],
+];
+const API = "/api/mensagens";
+/* ================================================= */
+
+const $ = (s) => document.querySelector(s);
+
+// ---- fundo com slideshow das fotos dela
+const fundo = $("#fundo");
+FOTOS_DELA.forEach((f, i) => {
+  const img = new Image(); img.src = `img/${f}.jpg`; img.alt = "";
+  if (i === 0) img.className = "ativa";
+  fundo.appendChild(img);
+});
+let atual = 0;
+setInterval(() => {
+  const imgs = fundo.querySelectorAll("img");
+  imgs[atual].classList.remove("ativa");
+  atual = (atual + 1) % imgs.length;
+  imgs[atual].classList.add("ativa");
+}, 6000);
+
+// ---- corações flutuando
+const EMOJI_COR = ["💖","💗","💕","💞","🌸","✨","🎀","💓"];
+function soltarCoracao() {
+  const c = document.createElement("span");
+  c.className = "cor";
+  c.textContent = EMOJI_COR[Math.floor(Math.random() * EMOJI_COR.length)];
+  c.style.left = Math.random() * 100 + "vw";
+  c.style.fontSize = 16 + Math.random() * 26 + "px";
+  c.style.animationDuration = 7 + Math.random() * 8 + "s";
+  $("#coracoes").appendChild(c);
+  setTimeout(() => c.remove(), 16000);
+}
+setInterval(soltarCoracao, 700);
+for (let i = 0; i < 8; i++) setTimeout(soltarCoracao, i * 200);
+
+// ---- confete
+function confete(qtd = 120) {
+  const cores = ["#ff4fa3","#e0147a","#c77dff","#ffd6ea","#fff","#ffb3d9","#ffd166"];
+  for (let i = 0; i < qtd; i++) {
+    const p = document.createElement("div");
+    p.className = "confete";
+    p.style.left = Math.random() * 100 + "vw";
+    p.style.background = cores[i % cores.length];
+    p.style.borderRadius = Math.random() > .5 ? "50%" : "2px";
+    p.style.animationDuration = 2.5 + Math.random() * 2.5 + "s";
+    p.style.animationDelay = Math.random() * .6 + "s";
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 6000);
+  }
+}
+
+// ---- cronômetro
+const opcData = { weekday:"long", day:"2-digit", month:"long", timeZone:"America/Sao_Paulo" };
+$("#dataAlvo").textContent = "📅 " + DATA_RETORNO.toLocaleDateString("pt-BR", opcData);
+const ultimo = {};
+let festejou = false;
+function pad(n) { return String(n).padStart(2, "0"); }
+function set(id, v) {
+  const el = document.getElementById(id);
+  if (ultimo[id] !== v) { el.textContent = v; el.classList.remove("tic"); void el.offsetWidth; el.classList.add("tic"); ultimo[id] = v; }
+}
+function tick() {
+  const agora = Date.now();
+  let diff = DATA_RETORNO - agora;
+  if (diff <= 0) {
+    $("#cronometro").classList.add("fim");
+    $("#dataAlvo").textContent = "Bem-vinda de volta, Brenda! 💖";
+    if (!festejou) { festejou = true; confete(200); setInterval(() => confete(60), 4000); }
+    return;
+  }
+  const d = Math.floor(diff / 864e5); diff -= d * 864e5;
+  const h = Math.floor(diff / 36e5); diff -= h * 36e5;
+  const m = Math.floor(diff / 6e4); diff -= m * 6e4;
+  const s = Math.floor(diff / 1e3);
+  set("d", pad(d)); set("h", pad(h)); set("m", pad(m)); set("s", pad(s));
+  const total = DATA_RETORNO - INICIO;
+  const pct = Math.min(100, Math.max(2, ((agora - INICIO) / total) * 100));
+  $("#barra").style.width = pct + "%";
+}
+tick(); setInterval(tick, 1000);
+
+// ---- galeria
+const gal = $("#galeria");
+GALERIA.forEach(([f, legenda], i) => {
+  const b = document.createElement("button");
+  b.className = "polaroid"; b.type = "button";
+  b.style.setProperty("--r", (i % 2 ? 1 : -1) * (1 + Math.random() * 3) + "deg");
+  b.innerHTML = `<img src="img/${f}.jpg" alt="${legenda}" loading="lazy"><span>${legenda}</span>`;
+  b.onclick = () => { const lb = $("#lightbox"); lb.querySelector("img").src = `img/${f}.jpg`; lb.classList.add("aberta"); };
+  gal.appendChild(b);
+});
+$("#lightbox").onclick = () => $("#lightbox").classList.remove("aberta");
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#lightbox").classList.remove("aberta"); });
+
+// ---- formulário
+const CORES = { rosa:"#ffd1e8", lilas:"#ecd9ff", pessego:"#ffe0cc", menta:"#d4f7e6", amarelo:"#fff4b8", azul:"#d6ecff" };
+let corSel = "rosa";
+const boxCores = $("#cores");
+Object.entries(CORES).forEach(([nome, hex]) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.style.background = hex; b.title = nome; b.setAttribute("aria-label", "Cor " + nome);
+  if (nome === corSel) b.classList.add("sel");
+  b.onclick = () => { corSel = nome; boxCores.querySelectorAll("button").forEach((x) => x.classList.remove("sel")); b.classList.add("sel"); };
+  boxCores.appendChild(b);
+});
+const texto = $("#texto");
+["💖","🥹","😭","🎉","🌸","✨","🫶","🤗","👑","🎀"].forEach((e) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.textContent = e; b.setAttribute("aria-label", "Inserir " + e);
+  b.onclick = () => { texto.value = (texto.value + " " + e).slice(0, 400); texto.focus(); atualizaCar(); };
+  $("#emojis").appendChild(b);
+});
+function atualizaCar() { $("#car").textContent = `${texto.value.length}/400`; }
+texto.addEventListener("input", atualizaCar);
+
+function aviso(msg, tipo) {
+  const a = $("#aviso"); a.textContent = msg; a.className = "aviso " + tipo;
+  if (tipo === "erro") { $("#form").classList.remove("treme"); void $("#form").offsetWidth; $("#form").classList.add("treme"); }
+}
+
+// ---- dados (servidor Netlify; se não houver, modo local de teste)
+let modoLocal = false;
+const LS = "mural-major-local";
+const lerLocal = () => { try { return JSON.parse(localStorage.getItem(LS)) || []; } catch { return []; } };
+const salvarLocal = (l) => { try { localStorage.setItem(LS, JSON.stringify(l)); } catch {} };
+const curtidasMinhas = new Set((() => { try { return JSON.parse(localStorage.getItem("major-curti")) || []; } catch { return []; } })());
+const salvarCurtidas = () => { try { localStorage.setItem("major-curti", JSON.stringify([...curtidasMinhas])); } catch {} };
+const ADMIN = new URLSearchParams(location.search).get("admin");
+
+async function api(metodo, corpo) {
+  const r = await fetch(API, { method: metodo, headers: { "content-type": "application/json" }, body: corpo ? JSON.stringify(corpo) : undefined });
+  const ct = r.headers.get("content-type") || "";
+  if (!ct.includes("json")) throw new Error("sem-api");
+  const d = await r.json();
+  if (!r.ok) { const e = new Error(d.erro || "erro"); e.status = r.status; throw e; }
+  return d;
+}
+
+let mensagens = [];
+const vistos = new Set();
+async function carregar() {
+  let novas;
+  try { novas = await api("GET"); modoLocal = false; }
+  catch (e) { modoLocal = true; novas = lerLocal(); }
+  if (JSON.stringify(novas) === JSON.stringify(mensagens) && vistos.size) return;
+  mensagens = novas; render();
+}
+
+function tempo(ts) {
+  const s = Math.floor((Date.now() - ts) / 1000);
+  if (s < 60) return "agora mesmo";
+  if (s < 3600) return `há ${Math.floor(s / 60)} min`;
+  if (s < 86400) return `há ${Math.floor(s / 3600)} h`;
+  return new Date(ts).toLocaleDateString("pt-BR", { day:"2-digit", month:"2-digit", timeZone:"America/Sao_Paulo" });
+}
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+
+function render() {
+  const lista = $("#listaMural");
+  const n = mensagens.length;
+  $("#infoMural").textContent = n
+    ? `💌 ${n} ${n === 1 ? "mensagem" : "mensagens"} de carinho pra Major` + (modoLocal ? " (modo teste — só neste aparelho)" : "")
+    : "";
+  if (!n) { lista.innerHTML = `<div class="vazio">Ainda não tem mensagens... seja a primeira pessoa a mandar carinho! 💖</div>`; lista.style.columns = "auto"; return; }
+  lista.style.columns = "";
+  lista.innerHTML = mensagens.map((m, i) => `
+    <article class="nota ${esc(m.cor || "rosa")} ${vistos.has(m.id) ? "" : "nova"}" style="--r:${((i * 37) % 7) - 3}deg">
+      <p>${esc(m.texto)}</p>
+      <footer>
+        <span class="quem">${esc(m.nome)}<span class="quando">${tempo(m.criado)}</span></span>
+        <span>
+          ${ADMIN ? `<button class="apagar" data-apagar="${esc(m.id)}">🗑</button>` : ""}
+          <button class="curtir ${curtidasMinhas.has(m.id) ? "feito" : ""}" data-id="${esc(m.id)}">💖 ${m.curtidas || 0}</button>
+        </span>
+      </footer>
+    </article>`).join("");
+  mensagens.forEach((m) => vistos.add(m.id));
+}
+
+$("#listaMural").addEventListener("click", async (e) => {
+  const bc = e.target.closest("[data-id]");
+  const ba = e.target.closest("[data-apagar]");
+  if (bc) {
+    const id = bc.dataset.id;
+    if (curtidasMinhas.has(id)) return;
+    curtidasMinhas.add(id); salvarCurtidas();
+    const m = mensagens.find((x) => x.id === id); if (m) m.curtidas = (m.curtidas || 0) + 1;
+    render(); soltarCoracao(); soltarCoracao();
+    if (modoLocal) salvarLocal(mensagens); else api("POST", { acao: "curtir", id }).catch(() => {});
+  }
+  if (ba) {
+    const id = ba.dataset.apagar;
+    try {
+      if (!modoLocal) await api("POST", { acao: "apagar", id, senha: ADMIN });
+      mensagens = mensagens.filter((x) => x.id !== id);
+      if (modoLocal) salvarLocal(mensagens);
+      render();
+    } catch (err) { alert("Não foi possível apagar: " + err.message); }
+  }
+});
+
+$("#form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const nome = $("#nome").value.trim();
+  const msg = texto.value.trim();
+  if (msg.length < 2) return aviso("Escreva uma mensagem pra Major 💬", "erro");
+  if (temPalavrao(nome) || temPalavrao(msg)) {
+    return aviso("Opa! 🙊 Sua mensagem tem palavras não permitidas. Vamos mandar só carinho pra Major!", "erro");
+  }
+  const btn = $("#enviar"); btn.disabled = true; btn.textContent = "Enviando... 💌";
+  try {
+    let nova;
+    if (modoLocal) {
+      nova = { id: "msg-" + Date.now(), nome: nome || "Anônimo 💌", texto: msg, cor: corSel, criado: Date.now(), curtidas: 0 };
+      mensagens.unshift(nova); salvarLocal(mensagens);
+    } else {
+      nova = await api("POST", { nome, texto: msg, cor: corSel });
+      mensagens.unshift(nova);
+    }
+    render(); confete(90);
+    texto.value = ""; atualizaCar();
+    aviso("Mensagem enviada! A Major vai amar 💖", "ok");
+    setTimeout(() => $("#aviso").className = "aviso", 4000);
+  } catch (err) {
+    aviso(err.message || "Não deu pra enviar agora. Tenta de novo! 🙏", "erro");
+  } finally { btn.disabled = false; btn.textContent = "Enviar carinho 💖"; }
+});
+
+carregar();
+setInterval(() => { if (!modoLocal && !document.hidden) carregar(); }, 20000);
+</script>
+</body>
+</html>
