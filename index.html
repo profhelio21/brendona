@@ -131,6 +131,40 @@ footer.rodape{text-align:center;color:#fff;font-weight:800;padding:30px 0 50px;t
 .confete{position:fixed;top:-20px;width:10px;height:16px;z-index:60;pointer-events:none;animation:cair linear forwards}
 @keyframes cair{to{transform:translateY(110vh) rotate(720deg)}}
 
+
+/* ===== MODO FESTA (quando ela chega) ===== */
+#fogos{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40;display:none}
+body.festa #fogos{display:block}
+body.festa .fundo::after{background:linear-gradient(120deg,rgba(255,79,163,.8),rgba(199,125,255,.75),rgba(255,59,59,.7),rgba(255,209,102,.7),rgba(255,79,163,.8));background-size:400% 400%;animation:arcoiris 6s ease infinite}
+@keyframes arcoiris{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
+body.festa h1{animation:danca .8s ease-in-out infinite}
+@keyframes danca{0%,100%{transform:rotate(-3deg) scale(1)}50%{transform:rotate(3deg) scale(1.08)}}
+body.festa .avatar{animation:pulaAvatar .6s ease-in-out infinite;box-shadow:0 0 0 6px #ffd166,0 0 40px 10px #ff4fa3}
+@keyframes pulaAvatar{0%,100%{transform:scale(1) rotate(-6deg)}50%{transform:scale(1.15) rotate(6deg)}}
+body.festa .polaroid{animation:balanca 1.2s ease-in-out infinite}
+body.festa .polaroid:nth-child(even){animation-delay:.3s}
+@keyframes balanca{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg) translateY(-6px)}}
+body.festa .nota{animation:balanca 1.6s ease-in-out infinite}
+.faixa-festa{display:none;position:fixed;left:0;right:0;top:0;z-index:45;background:linear-gradient(90deg,#d7000f,#ff4fa3,#d7000f);color:#ffd166;font-family:'Baloo 2';font-weight:800;font-size:clamp(1rem,3.6vw,1.5rem);padding:8px 0;overflow:hidden;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3);border-bottom:3px solid #ffd166}
+.faixa-festa span{display:inline-block;padding-left:100%;animation:letreiro 16s linear infinite}
+@keyframes letreiro{to{transform:translateX(-100%)}}
+body.festa .faixa-festa{display:block}
+body.festa header{padding-top:70px}
+.banner-festa{display:none;position:fixed;inset:0;z-index:48;align-items:center;justify-content:center;flex-direction:column;text-align:center;background:radial-gradient(circle,rgba(215,0,15,.85),rgba(74,16,54,.92));cursor:pointer;padding:16px}
+.banner-festa.mostrar{display:flex;animation:surge .6s cubic-bezier(.2,1.6,.4,1)}
+@keyframes surge{from{transform:scale(.3);opacity:0}}
+.banner-festa .grande{font-family:'Pacifico';color:#fff;font-size:clamp(2.4rem,10vw,6rem);text-shadow:0 4px 0 #d7000f,0 0 40px #ff4fa3;animation:danca .8s ease-in-out infinite}
+.banner-festa .cn{font-size:clamp(2rem,8vw,4.5rem);color:#ffd166;font-weight:800;text-shadow:0 3px 0 #d7000f;letter-spacing:6px;margin:6px 0}
+.banner-festa small{color:#fff;font-weight:800;margin-top:14px;opacity:.85}
+.banner-festa img{width:160px;height:160px;border-radius:50%;object-fit:cover;border:6px solid #ffd166;margin-bottom:10px;animation:pulaAvatar .6s infinite}
+.emoji-festa{position:fixed;z-index:44;pointer-events:none;top:-60px;animation:chuva linear forwards}
+@keyframes chuva{to{transform:translateY(115vh) rotate(360deg)}}
+.dragao{position:fixed;z-index:46;pointer-events:none;font-size:clamp(3rem,10vw,6rem);animation:voa 7s linear forwards;left:-20vw}
+@keyframes voa{0%{transform:translateX(0) translateY(0)}25%{transform:translateX(35vw) translateY(-30px)}50%{transform:translateX(70vw) translateY(20px)}75%{transform:translateX(105vw) translateY(-20px)}100%{transform:translateX(140vw) translateY(0)}}
+.lanterna{position:fixed;top:44px;z-index:44;font-size:clamp(2rem,6vw,3.4rem);pointer-events:none;display:none;transform-origin:top center;animation:pendulo 2s ease-in-out infinite}
+body.festa .lanterna{display:block}
+@keyframes pendulo{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}
+
 @media (max-width:560px){
   .blocos{gap:8px}.bloco{border-radius:16px;padding:12px 2px 8px}
   .avatar{width:110px;height:110px}
@@ -197,6 +231,18 @@ footer.rodape{text-align:center;color:#fff;font-weight:800;padding:30px 0 50px;t
   <footer class="rodape">Feito com muito 💖 pela turma · Do Piauí para o Mundo 2026</footer>
 </div>
 
+
+<canvas id="fogos"></canvas>
+<div class="faixa-festa"><span>🏮 欢迎回来 BRENDA! 🧧 A MAJOR VOLTOU! 🐉 BEM-VINDA DE VOLTA! 🎆 欢迎回来 MAJOR! 🥟 DO PIAUÍ PARA O MUNDO E DE VOLTA PRA CASA! 🏮</span></div>
+<span class="lanterna" style="left:4%">🏮</span><span class="lanterna" style="right:4%;animation-delay:.5s">🏮</span>
+<span class="lanterna" style="left:24%;animation-delay:.8s">🏮</span><span class="lanterna" style="right:24%;animation-delay:.2s">🏮</span>
+<div class="banner-festa" id="bannerFesta">
+  <img src="img/brenda-sorvete1.jpg" alt="Brenda">
+  <div class="grande">A Major voltou!</div>
+  <div class="cn">欢迎回来</div>
+  <div style="color:#fff;font-weight:800;font-size:1.2rem">(huānyíng huílái = bem-vinda de volta!) 🇧🇷❤️🇨🇳</div>
+  <small>toque para ver o mural 💌</small>
+</div>
 <div class="lightbox" id="lightbox"><button aria-label="Fechar">✕</button><img alt=""></div>
 
 <script type="module">
@@ -204,7 +250,7 @@ import { temPalavrao } from "./filtro.mjs";
 
 /* ================= CONFIGURAÇÕES ================= */
 // Data e hora do retorno (horário de Brasília, -03:00)
-const DATA_RETORNO = new Date("2026-09-29T00:00:00-03:00");
+const DATA_RETORNO = new Date("2026-09-29T02:40:00-03:00");   // ← MUDE A HORA AQUI (ex.: 05:00:00)
 // Início da contagem (para a barra de progresso)
 const INICIO = new Date("2026-09-24T00:00:00-03:00");
 
@@ -273,7 +319,7 @@ function confete(qtd = 120) {
 }
 
 // ---- cronômetro
-const opcData = { weekday:"long", day:"2-digit", month:"long", timeZone:"America/Sao_Paulo" };
+const opcData = { weekday:"long", day:"2-digit", month:"long", hour:"2-digit", minute:"2-digit", timeZone:"America/Sao_Paulo" };
 $("#dataAlvo").textContent = "📅 " + DATA_RETORNO.toLocaleDateString("pt-BR", opcData);
 const ultimo = {};
 let festejou = false;
@@ -288,7 +334,7 @@ function tick() {
   if (diff <= 0) {
     $("#cronometro").classList.add("fim");
     $("#dataAlvo").textContent = "Bem-vinda de volta, Brenda! 💖";
-    if (!festejou) { festejou = true; confete(200); setInterval(() => confete(60), 4000); }
+    if (!festejou) { festejou = true; iniciarFesta(); }
     return;
   }
   const d = Math.floor(diff / 864e5); diff -= d * 864e5;
@@ -300,6 +346,89 @@ function tick() {
   const pct = Math.min(100, Math.max(2, ((agora - INICIO) / total) * 100));
   $("#barra").style.width = pct + "%";
 }
+
+// ================= MODO FESTA =================
+const EMOJIS_CHINA = ["🏮","🧧","🐉","🐲","🐼","🥟","🍜","🥢","🍵","🥮","🎎","🎐","🏯","🀄","🧨","🎆","🎇","🍡","🥠","🪭","🐅","🌸","💖","🎉","✨","🇨🇳","🇧🇷"];
+function chuvaEmoji(qtd = 18) {
+  for (let i = 0; i < qtd; i++) {
+    const e = document.createElement("span");
+    e.className = "emoji-festa";
+    e.textContent = EMOJIS_CHINA[Math.floor(Math.random() * EMOJIS_CHINA.length)];
+    e.style.left = Math.random() * 100 + "vw";
+    e.style.fontSize = 22 + Math.random() * 34 + "px";
+    e.style.animationDuration = 3 + Math.random() * 4 + "s";
+    e.style.animationDelay = Math.random() * 1.5 + "s";
+    document.body.appendChild(e);
+    setTimeout(() => e.remove(), 9000);
+  }
+}
+function soltarDragao() {
+  const d = document.createElement("div");
+  d.className = "dragao";
+  d.textContent = Math.random() > .5 ? "🐉🧧🏮" : "🐲🎆🐼";
+  d.style.top = 15 + Math.random() * 60 + "vh";
+  document.body.appendChild(d);
+  setTimeout(() => d.remove(), 7500);
+}
+
+// fogos de artifício (canvas)
+const cv = document.getElementById("fogos"), ctx = cv.getContext("2d");
+let W, H, fogetes = [], particulas = [];
+function redim() { const r = Math.min(window.devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * r; cv.height = H * r; ctx.setTransform(r, 0, 0, r, 0, 0); }
+addEventListener("resize", redim);
+const CORES_FOGO = ["#ff4fa3","#ffd166","#ff3b3b","#c77dff","#ffffff","#7cf5ff","#ff8fd0","#ffb300"];
+function lancar(x) {
+  fogetes.push({ x: x ?? W * (.15 + Math.random() * .7), y: H, vx: (Math.random() - .5) * 2, vy: -(H * .012 + Math.random() * H * .006), alvo: H * (.12 + Math.random() * .35), cor: CORES_FOGO[Math.floor(Math.random() * CORES_FOGO.length)] });
+}
+function explodir(f) {
+  const n = 70 + Math.random() * 50, tipo = Math.random();
+  for (let i = 0; i < n; i++) {
+    const a = (Math.PI * 2 * i) / n, v = tipo < .3 ? 4.2 : 1.5 + Math.random() * 4.5;
+    // tipo < .3 = explosão em formato de coração 💖
+    let vx = Math.cos(a) * v, vy = Math.sin(a) * v;
+    if (tipo < .3) { const t = a; vx = 16 * Math.sin(t) ** 3 * .28; vy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) * .28; }
+    particulas.push({ x: f.x, y: f.y, vx, vy, vida: 1, cor: Math.random() > .25 ? f.cor : CORES_FOGO[i % CORES_FOGO.length] });
+  }
+}
+function animarFogos() {
+  ctx.globalCompositeOperation = "destination-out";
+  ctx.fillStyle = "rgba(0,0,0,.22)"; ctx.fillRect(0, 0, W, H);
+  ctx.globalCompositeOperation = "lighter";
+  fogetes = fogetes.filter((f) => {
+    f.x += f.vx; f.y += f.vy; f.vy += .12;
+    ctx.fillStyle = f.cor; ctx.beginPath(); ctx.arc(f.x, f.y, 3, 0, 7); ctx.fill();
+    if (f.y <= f.alvo || f.vy >= 0) { explodir(f); return false; }
+    return true;
+  });
+  particulas = particulas.filter((p) => {
+    p.x += p.vx; p.y += p.vy; p.vy += .05; p.vx *= .985; p.vy *= .985; p.vida -= .012;
+    ctx.globalAlpha = Math.max(p.vida, 0); ctx.fillStyle = p.cor;
+    ctx.beginPath(); ctx.arc(p.x, p.y, 2.4, 0, 7); ctx.fill();
+    return p.vida > 0;
+  });
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(animarFogos);
+}
+
+function iniciarFesta() {
+  document.body.classList.add("festa");
+  redim(); animarFogos();
+  const banner = document.getElementById("bannerFesta");
+  banner.classList.add("mostrar");
+  banner.onclick = () => { banner.classList.remove("mostrar"); document.getElementById("mural").scrollIntoView({ behavior: "smooth" }); };
+  for (let i = 0; i < 6; i++) setTimeout(() => lancar(), i * 250);
+  confete(220); chuvaEmoji(40); soltarDragao();
+  setInterval(() => { if (!document.hidden) lancar(); }, 700);
+  setInterval(() => { if (!document.hidden) { lancar(W * .25); lancar(W * .75); } }, 3000);
+  setInterval(() => { if (!document.hidden) chuvaEmoji(14); }, 2500);
+  setInterval(() => { if (!document.hidden) confete(50); }, 5000);
+  setInterval(() => { if (!document.hidden) soltarDragao(); }, 9000);
+  document.addEventListener("click", (e) => { if (!e.target.closest("button,input,textarea,a")) { fogetes.push({ x: e.clientX, y: H, vx: 0, vy: -H * .016, alvo: e.clientY, cor: CORES_FOGO[Math.floor(Math.random() * 8)] }); } });
+}
+// Pré-visualizar a festa antes da hora: abra o site com ?festa no final do link
+if (new URLSearchParams(location.search).has("festa")) { festejou = true; iniciarFesta(); }
+// ===============================================
+
 tick(); setInterval(tick, 1000);
 
 // ---- galeria
